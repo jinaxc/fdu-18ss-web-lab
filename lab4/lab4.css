@@ -6,13 +6,19 @@ div#topHeaderRow {
 }
 
 .price { 
-
+   font-weight: 900;
+   color:red;
+   font-size: 1.5em;
 }
 
-.similarTitle {  }
-
-.cartText { 
-
+.similarTitle {
+   font-weight: 700;
+}
+h3{
+   margin:0;
+}
+.cartText span{ 
+   color: rgb(193, 153, 84);
 }
 
 footer {
@@ -23,7 +29,18 @@ footer {
 
 .tight-form-group {  }
 
+.list-group-item{
+   border: 0;
+}
+#justOrdered div{
+   padding: 0.3em 0 0.3em 0;
+}
+#justOrdered a{
+   margin-right: 0.2em
+}
+#CustomerService .list-group-item{
+   background: #E7E7E7;
+}
 #copyrightRow { 
-    background-color: #3A3A3A; 
-
+   background-color: #3A3A3A; 
 }
