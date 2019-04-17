@@ -303,11 +303,14 @@
        let shipping = document.getElementsByClassName("shipping")[0].firstChild;
        let total = document.getElementsByClassName("total")[0].firstChild;
        let items = document.getElementsByClassName("items");
+       alert(/[0-9]+/.exec(subtotal.nodeValue));
+       subtotal.nodeValue = 0;
        for(let i = 0;i < items.length;i++){
-         subtotal.nodeValue = "$" + parseInt(/[0-9]*/.match(subtotal.nodeValue)) + parseInt(/[0-9]*/.match(items[i].lastChild.firstChild.nodeValue));
+         subtotal.nodeValue = "$" + (parseInt(/[0-9]+/.exec(subtotal.nodeValue)) + parseInt(/[0-9]+/.exec(items[i].lastChild.firstChild.nodeValue)));
        }
-       tax.nodeValue  = parseInt(subtotal.nodeValue / 10);
-       total.nodeValue = parseInt(tax.nodeValue) + parseInt(subtotal.nodeValue) + parseInt(shipping.nodeValue);
+       tax.nodeValue  = parseInt(/[0-9]+/.exec(subtotal.nodeValue) / 10);
+       shipping.nodeValue = "$" + ((parseInt(/[0-9]+/.exec(subtotal.nodeValue)) <= 1000) ? 40 : 0);
+       total.nodeValue = parseInt(/[0-9]+/.exec(tax.nodeValue)) + parseInt(/[0-9]+/.exe(subtotal.nodeValue)) + parseInt(/[0-9]+/.exec(shipping.nodeValue));
     </script>
   </body>
 </html>
