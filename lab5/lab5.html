@@ -125,7 +125,6 @@
             <th>Price</th>
             <th>Amount</th>
          </tr>
-
          <!-- 这是你需要修改的地方 -->
          <!-- 本来是下面这样👇 -->
 
@@ -160,19 +159,19 @@
 
          <tr class="success strong">
             <td colspan="4" class="moveRight">Subtotal</td>
-            <td >$1700</td>
+            <td class = "subtotal">$1700</td>
          </tr>
          <tr class="active strong">
             <td colspan="4" class="moveRight">Tax</td>
-            <td>$170</td>
+            <td class="tax">$170</td>
          </tr>  
          <tr class="strong">
             <td colspan="4" class="moveRight">Shipping</td>
-            <td>$100</td>
+            <td class="shipping">$100</td>
          </tr> 
          <tr class="warning strong text-danger">
             <td colspan="4" class="moveRight">Grand Total</td>
-            <td>$1970</td>
+            <td class="total">$1970</td>
          </tr>    
          <tr >
             <td colspan="4" class="moveRight"><button type="button" class="btn btn-primary" >Continue Shopping</button></td>
@@ -266,5 +265,49 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="bootstrap3_defaultTheme/assets/js/jquery.js"></script>
     <script src="bootstrap3_defaultTheme/dist/js/bootstrap.min.js"></script>    
+    <script>
+       let cart = document.querySelectorAll(".container table tbody")[0];
+       let createItemLine = function(info){
+         let line = document.createElement("tr");
+         let createTd = function(content){
+            let tr = document.createElement("td");
+            if(/.jpg$/.test(content)){
+               let img = document.createElement("img");
+               img.src = content;
+               img.className = "img-thumbnail";
+               tr.appendChild(img);
+            }
+            else{
+               tr.innerHTML = content;
+            }
+            return tr;
+         }
+         for(let v of info){
+            line.appendChild(createTd(v));
+         }
+         line.className = "items";
+         line.appendChild(createTd("$" + info[info.length - 1].slice(1) * info[info.length - 2]))  ;
+         return line;
+       }
+       var files = new Array(
+          new Array('images/art/tiny/116010.jpg','Artist Holding a Thistle',2,'$500'),
+          new Array('images/art/tiny/113010.jpg','Self-portrait in a Straw Hat',1,"$700")
+       );
+       for(let i = 1;i >= 0;i--){
+         cart.insertBefore(createItemLine(files[i]),cart.childNodes[1]);
+       }
+    </script>
+    <script>
+       let subtotal = document.getElementsByClassName("subtotal")[0].firstChild;
+       let tax = document.getElementsByClassName("tax")[0].firstChild;
+       let shipping = document.getElementsByClassName("shipping")[0].firstChild;
+       let total = document.getElementsByClassName("total")[0].firstChild;
+       let items = document.getElementsByClassName("items");
+       for(let i = 0;i < items.length;i++){
+         subtotal.nodeValue = "$" + parseInt(/[0-9]*/.match(subtotal.nodeValue)) + parseInt(/[0-9]*/.match(items[i].lastChild.firstChild.nodeValue));
+       }
+       tax.nodeValue  = parseInt(subtotal.nodeValue / 10);
+       total.nodeValue = parseInt(tax.nodeValue) + parseInt(subtotal.nodeValue) + parseInt(shipping.nodeValue);
+    </script>
   </body>
 </html>
